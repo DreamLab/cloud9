@@ -28,28 +28,12 @@ module.exports = ext.register("ext/html/html", {
     deps    : [code],
     markup  : markup,
     nodes   : [],
+    enabled : false,
+    inited  : false,
 
-    hook : function(){
+    hook: function() {
         var _self = this;
-        tabEditors.addEventListener("afterswitch", function(e){
-            if (e.nextPage) {
-            /*var ext = e.nextPage.id.split(".").pop();
-
-            if (ext == ".html" || ext == ".shtml"
-              || ext == ".js" || ext == ".txt"
-              || ext == ".xml") {*/
-                ext.initExtension(_self);
-                _self.page = e.nextPage;
-                _self.enable();
-            /*}
-            else {
-                _self.disable();
-            }*/
-            }
-            else {
-                _self.disable();
-            }
-        });
+        ide.addEventListener("socketMessage", this.onMessage.bind(this));
     },
 
     init : function() {
@@ -64,12 +48,44 @@ module.exports = ext.register("ext/html/html", {
         }
 
         btnHtmlOpen.onclick = this.onOpenPage.bind(this);
+        this.inited = true;
         this.enabled = true;
     },
 
     onOpenPage : function() {
-        var file = this.page.$model.data;
-        window.open(location.protocol + "//" + location.host + file.getAttribute("path"), "_blank");
+        ide.send({
+            "command": "gethost",
+            "runner": "node"
+        });
+    },
+
+    onMessage: function(e) {
+        var message = e.message;
+
+        console.log("PREVIEW", message);
+        switch(message.type) {
+            case "preview-link":
+                window.open(location.protocol + "//" + message.data, "_blank");
+            break;
+            case "state":
+                if (message.nodeProcessRunning) {
+                    ext.initExtension(this);
+                }
+            break;
+            case "node-start":
+                if (!this.inited) {
+                    ext.initExtension(this);
+                }
+                if (!this.enabled) {
+                    this.enable();
+                }
+            break;
+            case "node-exit":
+                if (this.enabled) {
+                    this.disable();
+                }
+            break;
+        }
     },
 
     enable : function() {
