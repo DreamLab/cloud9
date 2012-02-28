@@ -146,8 +146,11 @@ User.VISITOR_PERMISSIONS = {
             return;
 
         // pass a lambda to enable socket.io ACK
-        for (var id in this.clients)
-            this.clients[id].send(msg, function() {});
+        for (var id in this.clients) {
+            if (this.clients.hasOwnProperty(id)) {
+                this.clients[id].send(msg, function() {});
+            }
+        }
     };
     
 }).call(User.prototype);
