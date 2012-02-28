@@ -140,6 +140,7 @@ var contentTypes = {
     "php": "application/x-httpd-php",
     "phtml": "application/x-httpd-php",
     "html": "text/html",
+    "jqtpl": "text/html",
     "xhtml": "application/xhtml+xml",
     "coffee": "text/x-script.coffeescript",
     "py": "text/x-script.python",

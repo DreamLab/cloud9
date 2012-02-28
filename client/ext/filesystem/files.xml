@@ -666,6 +666,7 @@ fu.mime = {
           , ".hh"    : "text/x-c"
           , ".htm"   : "text/html"
           , ".html"  : "text/html"
+          , ".jqtpl" : "text/html"
           , ".ico"   : "image/vnd.microsoft.icon"
           , ".ics"   : "text/calendar"
           , ".ifb"   : "text/calendar"
