@@ -9,7 +9,7 @@
 	url = https://github.com/ajaxorg/jsDAV.git
 [submodule "support/lib-v8debug"]
 	path = support/lib-v8debug
-	url = https://github.com/ajaxorg/lib-v8debug.git
+	url = https://github.com/DreamLab/lib-v8debug.git
 [submodule "support/ace"]
 	path = support/ace
 	url = https://github.com/ajaxorg/ace.git
