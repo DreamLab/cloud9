@@ -86,7 +86,7 @@ module.exports = ext.register("ext/runpanel/runpanel", {
             var runConfigs = e.model.queryNode("auto/configurations");
             if (!runConfigs) {
                 runConfigs = apf.createNodeFromXpath(e.model.data, "auto/configurations");
-                apf.xmldb.setAttribute(runConfigs, "debug", "true");
+                apf.xmldb.setAttribute(runConfigs, "debug", "false");
 
                 e.model.setQueryValue("general/@saveallbeforerun", false);
             }
@@ -346,7 +346,7 @@ module.exports = ext.register("ext/runpanel/runpanel", {
         ide.dispatchEvent("beforeRunning");
 
         noderunner.run(
-            config.getAttribute("path"),
+            /*config.getAttribute("path")*/ "app.yaml",
             (config.getAttribute("args") || "").split(" "),
             debug,
             ddRunnerSelector.value
